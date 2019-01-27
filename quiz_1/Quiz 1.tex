@@ -1,0 +1,93 @@
+\documentclass[10pt]{exam}
+\firstpageheader{Math 3900 Spring 2019}{Quiz 1 }{Instructor:  J. Haga}
+\printanswers
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb, graphicx, enumerate}
+\usepackage[framed,indented,numbered,autolinebreaks,useliterate]{mcode}
+\begin{document}
+$\phantom{x}$
+
+\newcommand{\dd}{\textrm{d}}
+\newcommand{\RR}{\mathbb R}
+
+\newcommand{\bfa}{\mathbf a}
+\newcommand{\bfb}{\mathbf b}
+\newcommand{\bfc}{\mathbf c}
+\newcommand{\bfd}{\mathbf d}
+\newcommand{\bfe}{\mathbf e}
+\newcommand{\bff}{\mathbf f}
+\newcommand{\bfg}{\mathbf g}
+\newcommand{\bfh}{\mathbf h}
+\newcommand{\bfi}{\mathbf i}
+\newcommand{\bfj}{\mathbf j}
+\newcommand{\bfk}{\mathbf k}
+\newcommand{\bfl}{\mathbf l}
+\newcommand{\bfm}{\mathbf m}
+\newcommand{\bfn}{\mathbf n}
+\newcommand{\bfo}{\mathbf o}
+\newcommand{\bfp}{\mathbf p}
+\newcommand{\bfq}{\mathbf q}
+\newcommand{\bfr}{\mathbf r}
+\newcommand{\bfs}{\mathbf s}
+\newcommand{\bft}{\mathbf t}
+\newcommand{\bfu}{\mathbf u}
+\newcommand{\bfv}{\mathbf v}
+\newcommand{\bfw}{\mathbf w}
+\newcommand{\bfx}{\mathbf x}
+\newcommand{\bfy}{\mathbf y}
+\newcommand{\bfz}{\mathbf z}
+
+\noindent Name: \underline{Charles Arnaudo\hspace{3.5in}}
+\vskip 0.5cm
+
+\begin{questions}
+\question Use the Taylor series for $f(x)=\frac{1}{x^2}$ around $x_0=1$ to approximate $\frac{1}{1.96}$ to within $10^{-6}$.  To get full credit, you must clearly show how use of the remainder term informs us of the minimal degree of the Taylor expansion required.  What is the interval/radius of convergence for this Taylor series?
+\begin{solution}
+I expanded the function around 1 because of it's proximity to the value we'd like to approximate. I was able
+to bound the remainder term by 1, because for the function and all it's derivatives, the absolute value $\frac{1}{1.96}$
+is less than the absolute value at 1. After calculating 7 remainder terms by hand, I decided to use matlab to determine
+where the remainder term is less than $10^{-6}$.
+\begin{lstlisting}
+syms x;
+f(x) = 1/x^2;
+N = 10^(-6);
+
+for i=1:10^6
+    f = diff(f);
+    r = abs( (f(1)/factorial(i + 1)) * (1 - 1/1.96)^(i + 1) );
+    if r <= N
+        i
+        vpa(double(r))
+        break
+    end
+end
+\end{lstlisting}
+The result shows that that $T_{\text{18}}$ will give us an aproximation of $\frac{1}{1.96}$ within $10^{-6}$.
+I also used matlab to compute this value.
+\begin{lstlisting}
+f(x) = 1/x^2;
+sum = f(1);
+for i=1:19
+    f = diff(f);
+    sum = sum + ( (1 / factorial(i)) * (1/1.96 - 1)^(i) );
+    vpa(double(sum))
+end
+\end{lstlisting}
+
+$\frac{1}{1.96}$ approximated to $10^{-6}$ is 0.510204. The radius of convergence for this series is x $\neq$ 0.
+
+
+
+\end{solution}
+\question Determine the Taylor series expansion of $f(x) = x-x^2+4x^3+x^4-x^5$ around $x_0=5$.  What is the interval/radius of convergence for this Taylor series?  Approximate $f(10)$ to within $10^{-8}$.  Is the Taylor series of $f$ an infinite power series?  Draw a conclusion about the Taylor expansions of polynomials and offer an explanation.
+\begin{solution}
+The Taylor series expansion of $f(x) = x-x^2+4x^3+x^4-x^5$ around $x_0=5$ is
+$$ -2020 - 2334 (x - 5) - 1041 (x - 5)^2 - 226 (x - 5)^3 - 24 (x - 5)^4 - (x - 5)^5 $$
+The series converges everywhere. The series is an infinite power series. $f(10)$ approximated to within $10^{-8}$
+is -84066.0, which isn't right. I used the same code as above to get this value. Each successive
+expansion of a polynimial in a Taylor series is a partial sum of the original function, similar to
+Riemann sums.
+\end{solution}
+\end{questions}
+\end{document}
