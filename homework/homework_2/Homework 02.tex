@@ -1,0 +1,95 @@
+\documentclass[12 pt, letterpaper]{exam}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{enumerate, mathrsfs}
+\usepackage[framed,indented,numbered,autolinebreaks,useliterate]{mcode}
+
+
+\theoremstyle{definition}
+\newtheorem{ex}{Example}
+\newtheorem{df}{Definition}
+\newtheorem{thm}{Theorem}
+\newtheorem{prob}{Problem}
+\printanswers
+
+\newcommand{\suchthat}{\,\Big{|}\,}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\dd}{\,\,\textrm{d}}
+
+\firstpageheader{Math 3900 Spring 2019}{Homework 2}{Instructor:  J. Haga}
+\begin{document}
+\begin{questions}
+\question 
+\begin{parts}
+\part[10] Use the standard conversion algorithm (the description of which was given in class, and which can be found in any text on discrete math) to determine the binary representation of $(0.15)_{10}$.  Note:  this number has a repeating binary expansion.
+\begin{solution}
+    Using the conversion algorithm given in class, the binary representation of $(0.15)_{10}$ is $$0.00\overline{1001}$$
+    0.15
+
+    $\rightarrow$ 0.3
+
+    0.6
+
+    1.2
+
+    0.4
+
+    0.8
+
+    1.6
+
+    1.2
+
+    0.4
+    
+    0.8
+
+    1.6
+    
+    ...
+    
+\end{solution}
+\part[10] Show by explicit application of a geometric series (as done in class) that your answer in part (a) is correct.
+\begin{solution}
+\end{solution}
+\end{parts}
+\question This question refers to the function \texttt{decimal\_to\_bin\_str.m} distributed in class.
+\begin{parts}
+\part[10] If the leading binary digit of the whole part of \texttt{a} is \texttt{0}, then there is a procedure performed in lines 68-78 of the script.  If the leading binary digit is \texttt{1}, rather than \texttt{0}, then the script performs a different procedure (lines 84-92).  What do each of these procedures do?  How do these procedures differ?  Why is it necessary to have two separate procedures for each of these cases?
+\begin{solution}
+Both procedures check the first bit of \texttt{wb}. If the first bit is 1, the code takes 
+\end{solution}
+\part[10] Suppose that $n$ bits are used to store a floating point binary number with $k$ digits of precision.  Determine (with explicit calculation) the maximum value of the exponent, and (recalling that the bias is taken to be half of the maximum value of the exponent, rounded down) explain how line 96 correctly accounts for the bias.
+\end{parts}
+\question This question refers to the function \texttt{bin\_float\_todec.m} distributed in class.
+\begin{parts}
+\part[6] If one expects $k$ digits of binary precision, how many digits of decimal precision should one expect?  Explain.
+\part[6] Using your answer to part (a), explain why it may be necessary to include the command on line 14.
+\part[8] Explain, in entirety, line 36.
+\end{parts}
+\question
+\begin{parts}
+\part[7] Convert 13.6 to a 9 bit binary floating point number with 5 digits of precision.  Show your work.
+\part[7] Convert the floating point number obtained in part (a) back to decimal.  Show your work.
+\part[6] Explain what happened.
+\end{parts}
+\question The binomial coefficient $$\binom{m}{k} = \frac{m!}{k!(m-k)!}$$ describes the number of ways of choosing a subset of $k$ objects from a set of $m$ elements.
+\begin{parts}
+\part[6] Suppose decimal machine numbers are of the form 
+\begin{align*}
+\pm 0.d_1d_2d_3d_4\times 10^n,\quad \quad \textrm{with }\quad 1\leq d_1\leq 9,\,\,0\leq d_i\leq 9,\,\textrm{ if } i=2,3,4\quad \textrm{and}\quad |n|\leq 15.
+\end{align*}
+What is the largest value of $m$ for which the binomial coefficient $\binom{m}{k}$ can be computed for all $k$ by the definition without causing overflow?
+\part[6] Show that $\binom{m}{k}$ can also be computed by $$\binom{m}{k} = \left(\frac{m}{k}\right)\left(\frac{m-1}{k-1}\right)\cdots \left(\frac{m-k+1}{1}\right).$$
+\part[4] What is the largest value of $m$ for which the binomial coefficient $\binom{m}{3}$ can be computed in part (b) without causing overflow?
+\part[4] Use the equation in (b) and four-digit chopping arithmetic to compute the number of possible 5-card hands in a 52-card deck.  Compute the actual and relative errors.
+\end{parts}
+\end{questions}
+\end{document}
