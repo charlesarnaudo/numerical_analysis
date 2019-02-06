@@ -64,8 +64,6 @@ fb = '';
 % be infinite, we must limit the number of digits generated to 
 % avoid an endless loop.  We stop this process once we have 
 % collected k digits for the mantissa, which we call m.
-disp(wb(1))
-disp(k)
 if wb(1)=='0';
     exp=floor(log2(f));
     f=2^-exp*f-floor(2^-exp*f);
@@ -74,7 +72,6 @@ if wb(1)=='0';
         d=floor(2*f);
         fb=strcat(fb,num2str(d));
         f=2*f-floor(2*f);
-        disp(fb)
     end
     m=fb;
 end
@@ -90,7 +87,6 @@ if wb(1)=='1';
         d=floor(2*f);
         m=strcat(m,num2str(d));
         f=2*f-floor(2*f);
-        disp(m)
     end
 end
 

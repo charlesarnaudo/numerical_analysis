@@ -77,6 +77,17 @@ Both procedures check the first bit of \texttt{wb}. If the first bit is 1, the c
 \question
 \begin{parts}
 \part[7] Convert 13.6 to a 9 bit binary floating point number with 5 digits of precision.  Show your work.
+\begin{solution}
+A 9 bit binary floating point number with 5 points of precision will have 1 bit for the sign, 3 bits for
+the exponent, and 5 for the mantissa. 13.6 represented as a binary number is 
+$$ 1101.\overline{1001} $$
+Normalized, 
+$$ 1.101\overline{1001} * 2^3 $$
+With three bits for the exponent, and three required for normalization, the exponent part will be 6. The number is positive
+so the first bit will be 0. We then take 5 bits from binary point from the normalized representation, and get our
+binary floating point representation of 13.6 to be
+$$ 011010110 $$
+\end{solution}
 \part[7] Convert the floating point number obtained in part (a) back to decimal.  Show your work.
 \part[6] Explain what happened.
 \end{parts}
