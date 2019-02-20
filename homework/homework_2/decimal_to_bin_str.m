@@ -64,6 +64,7 @@ fb = '';
 % be infinite, we must limit the number of digits generated to 
 % avoid an endless loop.  We stop this process once we have 
 % collected k digits for the mantissa, which we call m.
+
 if wb(1)=='0';
     exp=floor(log2(f));
     f=2^-exp*f-floor(2^-exp*f);
