@@ -1,4 +1,3 @@
-function output = neville(x, y, z)
 %{
     Inputs: 
         x: array of x coords
@@ -7,17 +6,18 @@ function output = neville(x, y, z)
     Outputs:
         output: the final value from nevilles
 %}
-n = length(x);
-p = zeros(n, n);
-
-for i = 1:n
-    p(i, 1) = y(i);
-end
-
-for i=2:n
-    for j=2:i
-        p(i,j) = (((z-x(i-j+1)) * p(i, j-1)) - ((z-x(i)) * p(i-1, j-1))) / (x(i) - x(i-j+1));
+function output = neville(x, y, z)
+    n = length(x);
+    p = zeros(n, n);
+    
+    for i = 1:n
+        p(i, 1) = y(i);
     end
-end
-
-output = p(n, n);
+    
+    for i=2:n
+        for j=2:i
+            p(i,j) = (((z-x(i-j+1)) * p(i, j-1)) - ((z-x(i)) * p(i-1, j-1))) / (x(i) - x(i-j+1));
+        end
+    end
+    
+    output = p(n, n);
