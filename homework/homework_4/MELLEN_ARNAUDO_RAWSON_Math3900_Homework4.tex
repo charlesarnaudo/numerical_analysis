@@ -1,0 +1,104 @@
+\documentclass[12 pt, letterpaper]{exam}
+\printanswers
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{enumerate, mathrsfs}
+\usepackage[framed,indented,numbered,autolinebreaks,useliterate]{mcode}
+
+
+\theoremstyle{definition}
+\newtheorem{ex}{Example}
+\newtheorem{df}{Definition}
+\newtheorem{thm}{Theorem}
+\newtheorem{prob}{Problem}
+
+\newcommand{\suchthat}{\,\Big{|}\,}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\dd}{\,\,\textrm{d}}
+
+% \firstpageheader{Math 3900 Spring 2018}{Homework 4 }{Instructor:  J. Haga}
+
+\firstpageheader{Math 3900 Spring 2018}{Homework 5}{Arnaudo, Mellen, Rawson}
+
+
+\begin{document}
+\begin{questions}
+\question[50] Use equation 3.10 of the text to determine the interpolatory polynomial for the data $$f(1.4) = 2.37\quad \quad f(1.8) = 3.351 \quad \quad f(1.9) = 0.233 \quad \quad f(2.5) = 4.572.$$  Determine the value of this polynomial at $x=2.$  Show all of your steps. 
+\begin{solution}
+    We started by computing all of the divided differences for our data, starting with the data:
+
+    $f[x_0]=f(x_0)$, $f[x_1]=f(x_1)$, $f[x_2]=f(x_2)$, $f[x_3]=f(x_3)$
+    
+    and then using the equations:
+
+    \resizebox{\textwidth}{!}{\begin{tabular}{| l | l | l |}
+    \hline
+     $f[x_0,x_1]=\frac{f[x_1]-f[x_0]}{x_1-x_0}$ & - & - \\ \hline
+     $f[x_1,x_2]=\frac{f[x_2]-f[x_1]}{x_2-x_1}$ & $f[x_0,x_1,x_2]=\frac{f[x_1,x_2]-f[x_0,x_1]}{x_2-x_0}$ & - \\ \hline
+     $f[x_2,x_3]=\frac{f[x_3]-f[x_2]}{x_3-x_2}$ & $f[x_1,x_2,x_3]=\frac{f[x_2,x_3]-f[x_1,x_2]}{x_3-x_1}$ & $f[x_0,x_1,x_2,x_3]=\frac{f[x_1,x_2,x_3]-f[x_0,x_1,x_2]}{x_3-x_0}$ \\ \hline
+    \end{tabular}}
+
+    After computing, we got the divided differences to be:
+
+    \resizebox{\textwidth}{!}{\begin{tabular}{| l | l | l | l | l |}
+    \hline
+    $x_0=1.4$ & $f[x_0]=2.37$  & - & - & - \\ \hline
+    $x_1=1.8$ & $f[x_1]=3.351$ & $f[x_0,x_1]=2.4525$ & - & - \\ \hline
+    $x_2=1.9$ & $f[x_2]=0.233$ & $f[x_1,x_2]=-31.18$ & $f[x_0,x_1,x_2]=-67.265$ & - \\ \hline
+    $x_3=2.5$ & $f[x_3]=4.572$ & $f[x_2,x_3]=7.23167$ & $f[x_1,x_2,x_3]=54.8738$ & $f[x_0,x_1,x_2,x_3]=111.035$ \\ \hline
+    \end{tabular}}
+
+    Given equation 3.10, our interpolatory polynomial is
+    $$P_3(x) = 2.37 + 2.4525(x-1.4) - 67.265(x-1.4)(x-1.8) + 111.035(x-1.4)(x-1.8)(x-1.9)$$
+
+    Evaluating $P_3(2)$ gives us $-2.89788$.
+\end{solution}
+
+\newpage
+\question[50] Follow the pseudo-code expressed in Algorithm 3.2 of the text, to write a MATLAB script which will perform Newton's Divided Difference method to determine the interpolatory polynomial for the data in the previous problem.  Show that your script verifies the value of $P(2)$.
+
+\begin{solution}
+    This is our MATLAB code:
+    \begin{lstlisting}
+xValues = [1.4 1.8 1.9 2.5];
+yValues = [2.37 3.351 0.233 4.572];
+
+syms P(x);
+P(x) = NIDD(xValues, yValues);
+double(P(2))
+
+function P = NIDD(xValues, yValues)
+    n = length(xValues);
+    F = zeros(n,n);
+    F(1:n,1) = yValues;
+    for i = 2:n
+        for j = 2:i
+            F(i,j) = (F(i,j-1)-F(i-1,j-1))/(xValues(i)-xValues((i-j)+1));
+        end
+    end
+ 
+    syms P(x);
+    P = F(1,1);
+    for i=2:n
+        T = F(i,i);
+        for j=1:i-1
+            T = T * (x - xValues(j));
+        end
+        P = P + T;
+    end
+end
+    \end{lstlisting}
+    We get
+    $$ P(2) = -2.8979,$$
+    which is the same as our answer from part 1.
+\end{solution}
+
+\end{questions}
+\end{document}
